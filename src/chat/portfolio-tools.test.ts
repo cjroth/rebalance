@@ -1,27 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 import { createPortfolioTools } from './portfolio-tools'
-import type { StorageAdapter } from '../screens/storage'
-
-/** In-memory StorageAdapter for testing — no mocks. */
-class InMemoryStorage implements StorageAdapter {
-  private store = new Map<string, string>()
-
-  async read(key: string): Promise<string | null> {
-    return this.store.get(key) ?? null
-  }
-
-  async write(key: string, data: string): Promise<void> {
-    this.store.set(key, data)
-  }
-
-  async exists(key: string): Promise<boolean> {
-    return this.store.has(key)
-  }
-
-  async remove(key: string): Promise<void> {
-    this.store.delete(key)
-  }
-}
+import { InMemoryStorage } from '../test-utils/storage'
 
 const SAMPLE_CSV = `#holdings
 account,symbol,shares
